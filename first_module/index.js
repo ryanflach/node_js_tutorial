@@ -1,13 +1,14 @@
 'use strict';
 
-// const firstMod = require('./first-module');
+const { doSomething, getItDone: git } = require('./first-module');
+
+doSomething();
+git();
+
+// const configurableMod = require('./configurable-module');
 //
-// firstMod.doIt();
-
-const configurableMod = require('./configurable-module');
-
-const configuredA = configurableMod({ logPrefix: 'A> '});
-configuredA.log('test');
-
-const configuredB = configurableMod({ logPrefix: 'B> '});
-configuredB.log('test 2');
+// const configuredA = configurableMod({ logPrefix: 'A> '});
+// configuredA.log('test');
+//
+// const configuredB = configurableMod({ logPrefix: 'B> '});
+// configuredB.log('test 2');

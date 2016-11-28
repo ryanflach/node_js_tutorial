@@ -15,6 +15,9 @@ const port = 3000;
 // demo #5: rotate log file
 
 // demo #4: append to log file
+const log = entry => fs.appendFile(logFile, `${entry}\n`, 'utf8');
+const error = entry => log(`error: ${entry}`);
+const info = entry => log(`info: ${entry}`);
 
 const server = http.createServer((req, res) => {
 
@@ -48,11 +51,13 @@ const server = http.createServer((req, res) => {
 		// demo #3: read request file
     fs.readFile(reqFileName, 'utf8', (err, fileData) => {
       if (err) {
-        console.error(err);
+        error(err);
         res.writeHead(404);
         res.end();
         return;
       }
+
+      info(`${req.method} ${req.originalUrl}`);
 
       res.writeHead(200);
       res.end(fileData);

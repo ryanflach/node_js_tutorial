@@ -59,9 +59,19 @@ const server = http.createServer((req, res) => {
 
 	const processBody = new Promise(resolve => {
 
-		resolve();
-
 		// demo #6: process request body data
+    if (req.method === 'POST') {
+      const reqBodyBuffers = [];
+
+      req.on('data', chunk => reqBodyBuffers.push(new Buffer(chunk)));
+      req.on('end', () => {
+        console.log(Buffer.concat(reqBodyBuffers).toString('utf8'));
+
+        resolve();
+      });
+    } else {
+      resolve();
+    }
 
 	});
 

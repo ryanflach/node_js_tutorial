@@ -1,4 +1,4 @@
-import { getAll, add } from './widgets';
+import widgets from './widgets';
 
-add({ name: 'first widget', color: 'red', size: 'large' });
-console.log(getAll().length);
+widgets.add({ name: 'widget 1', color: 'red', size: 'large' });
+console.log(widgets.getAll().length);

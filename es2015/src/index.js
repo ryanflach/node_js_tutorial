@@ -1,4 +1,4 @@
-import widgets from './widgets';
+import { getAll as getAllFn, add as addWidget } from './widgets';
 
-widgets.add({ name: 'widget 1', color: 'red', size: 'large' });
-console.log(widgets.getAll().length);
+addWidget({ name: 'widget 1', color: 'red', size: 'large' });
+console.log(getAllFn().length);

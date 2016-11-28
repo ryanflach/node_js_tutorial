@@ -5,15 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 var widgets = [];
 
-// export const getAll = () => widgets;
-//
-// export const add = newWidget => widgets.push(newWidget);
-
-exports.default = {
-  getAll: function getAll() {
-    return widgets;
-  },
-  add: function add(newWidget) {
-    return widgets.push(newWidget);
-  }
+var getAll = exports.getAll = function getAll() {
+  return widgets;
 };
+
+var add = exports.add = function add(newWidget) {
+  return widgets.push(newWidget);
+};
+
+// export default {
+//   getAll: () => widgets,
+//   add: newWidget => widgets.push(newWidget)
+// }

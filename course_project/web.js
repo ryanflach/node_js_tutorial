@@ -78,23 +78,31 @@ const server = http.createServer((req, res) => {
 	const processFile = new Promise(resolve => {
 
 		// demo #3: read request file
-    fs.readFile(reqFileName, 'utf8', (err, fileData) => {
-      if (err) {
-        error(err);
-        res.writeHead(404);
-        res.end();
-        return;
-      }
-
-      info(`${req.method} ${req.originalUrl}`);
-
-      res.writeHead(200);
-      res.end(fileData);
-    });
+    // fs.readFile(reqFileName, 'utf8', (err, fileData) => {
+    //   if (err) {
+    //     error(err);
+    //     res.writeHead(404);
+    //     res.end();
+    //     return;
+    //   }
+    //
+    //   info(`${req.method} ${req.originalUrl}`);
+    //
+    //   res.writeHead(200);
+    //   res.end(fileData);
+    //
+    //   resolve();
+    // });
 
 		// demo #7: compressing response
+    res.on('finish', () => {
+      info(`${req.method} ${req.originalUrl}`);
+      resolve();
+    });
 
-    resolve();
+    const raw = fs.createReadStream(reqFileName);
+    res.writeHead(200, { 'Content-Encoding': 'gzip' });
+    raw.pipe(zlib.createGzip()).pipe(res);
 
 	});
 

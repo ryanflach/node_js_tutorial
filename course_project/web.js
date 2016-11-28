@@ -23,6 +23,17 @@ const server = http.createServer((req, res) => {
 	req.path = req.url.pathname === '/' ? defaultFile : req.url.pathname;
 
 	// demo #2: using path functions to create requested file name
+  let dirName = path.dirname(req.path);
+  if (dirName.endsWith('/')) {
+    dirName = dirName.slice(0, dirName.length - 1);
+  }
+
+  const reqFileName = path.format({
+    dir: path.join(__dirname, 'www', dirName),
+    base: path.basename(req.path)
+  });
+
+  console.log(reqFileName);
 
 	const processBody = new Promise(resolve => {
 

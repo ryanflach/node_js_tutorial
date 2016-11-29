@@ -7,6 +7,17 @@ const app = express();
 
 const server = http.createServer(app);
 
+app.get('/demo', (req, res, next) => {
+  console.log('handled demo request 1');
+  req.body = 'demo test!';
+  next();
+});
+
+app.get('/demo', (req, res) => {
+  console.log('handled demo request 2');
+  res.json({ msg: req.body });
+});
+
 app.use(express.static(options.webServer.folder, {
   index: 'index2.html',
   setHeaders: (res, path, stat) => {

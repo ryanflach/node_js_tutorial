@@ -7,7 +7,12 @@ const app = express();
 
 const server = http.createServer(app);
 
-app.use(express.static(options.webServer.folder));
+app.use(express.static(options.webServer.folder, {
+  index: 'index2.html',
+  setHeaders: (res, path, stat) => {
+    res.set('X-Custom-Header', 'My Express App');
+  }
+}));
 
 server.listen(options.webServer.port, () => {
   console.log(`web server started on port ${options.webServer.port}.`);

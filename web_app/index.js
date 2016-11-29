@@ -7,23 +7,11 @@ const app = express();
 
 const server = http.createServer(app);
 
-app.get('/demo', (req, res, next) => {
-  console.log('handled demo request 1');
-  req.body = 'demo test!';
-  next();
-});
+app.use('/demo/:id', (req, res) => {
+  res.send(`params: ${JSON.stringify(req.params)}<br>query: ${JSON.stringify(req.query)}`);
+})
 
-app.get('/demo', (req, res) => {
-  console.log('handled demo request 2');
-  res.json({ msg: req.body });
-});
-
-app.use(express.static(options.webServer.folder, {
-  index: 'index2.html',
-  setHeaders: (res, path, stat) => {
-    res.set('X-Custom-Header', 'My Express App');
-  }
-}));
+app.use(express.static(options.webServer.folder));
 
 server.listen(options.webServer.port, () => {
   console.log(`web server started on port ${options.webServer.port}.`);

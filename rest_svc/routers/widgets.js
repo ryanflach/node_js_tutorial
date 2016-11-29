@@ -1,19 +1,21 @@
 const express = require('express');
 const widgetRouter = express.Router();
+const path = require('path');
+const db = require('../database').connect(path.join(__dirname, '..', 'widgets.json'));
 
 widgetRouter.route('/widgets')
   .get((req, res) => {
-    res.json([
-      { name: 'Widget 1', color: 'blue', size: 'large', quantity: 3 },
-      { name: 'Widget 2', color: 'red', size: 'small', quantity: 5 },
-      { name: 'Widget 3', color: 'orange', size: 'medium', quantity: 10 }
-    ]);
+    db(con => con.getAll().then(widgets => res.json(widgets)));
   })
   .post();
 
 widgetRouter.route('/widgets/:widgetId')
-  .get()
+  .get((req, res) => {
+    db(con => con.get(parseInt(req.params.widgetId)).then(widgets => res.json(widgets)));
+  })
   .put()
-  .delete();
+  .delete((req, res) => {
+    db(con => con.delete(parseInt(req.params.widgetId)).then(widgets => res.json(widgets)));
+  });
 
 module.exports = widgetRouter;
